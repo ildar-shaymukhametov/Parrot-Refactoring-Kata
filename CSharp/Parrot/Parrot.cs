@@ -17,7 +17,7 @@ namespace Parrot
             _isNailed = isNailed;
         }
 
-        public double GetSpeed()
+        public virtual double GetSpeed()
         {
             switch (_type)
             {
@@ -42,9 +42,19 @@ namespace Parrot
             return 9.0;
         }
 
-        private double GetBaseSpeed()
+        protected double GetBaseSpeed()
         {
             return 12.0;
+        }
+    }
+
+    public class EuropeanParrot : Parrot
+    {
+        public EuropeanParrot() : base(default, default, default, default) { }
+
+        public override double GetSpeed()
+        {
+            return GetBaseSpeed();
         }
     }
 }
