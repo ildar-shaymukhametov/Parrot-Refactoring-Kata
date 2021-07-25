@@ -19,43 +19,23 @@ namespace Parrot
 
         public virtual double GetSpeed()
         {
-            switch (_type)
-            {
-                case ParrotTypeEnum.EUROPEAN:
-                    return GetBaseSpeed();
-                case ParrotTypeEnum.AFRICAN:
-                    return Math.Max(0, GetBaseSpeed() - GetLoadFactor() * _numberOfCoconuts);
-                case ParrotTypeEnum.NORWEGIAN_BLUE:
-                    return _isNailed ? 0 : GetBaseSpeed(_voltage);
-            }
-
-            throw new Exception("Should be unreachable");
+            return 12.0;
         }
 
         private double GetBaseSpeed(double voltage)
         {
-            return Math.Min(24.0, voltage * GetBaseSpeed());
+            return Math.Min(24.0, voltage * GetSpeed());
         }
 
         private double GetLoadFactor()
         {
             return 9.0;
         }
-
-        protected double GetBaseSpeed()
-        {
-            return 12.0;
-        }
     }
 
     public class EuropeanParrot : Parrot
     {
         public EuropeanParrot() : base(default, default, default, default) { }
-
-        public override double GetSpeed()
-        {
-            return GetBaseSpeed();
-        }
     }
 
     public class AfricanParrot : Parrot
@@ -68,7 +48,7 @@ namespace Parrot
 
         public override double GetSpeed()
         {
-            return Math.Max(0, GetBaseSpeed() - GetLoadFactor() * _numberOfCoconuts);
+            return Math.Max(0, base.GetSpeed() - GetLoadFactor() * _numberOfCoconuts);
         }
 
         private double GetLoadFactor()
@@ -94,7 +74,7 @@ namespace Parrot
 
         private double GetBaseSpeed(double voltage)
         {
-            return Math.Min(24.0, voltage * GetBaseSpeed());
+            return Math.Min(24.0, voltage * base.GetSpeed());
         }
     }
 }
