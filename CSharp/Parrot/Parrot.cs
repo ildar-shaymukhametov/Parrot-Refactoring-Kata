@@ -57,4 +57,23 @@ namespace Parrot
             return GetBaseSpeed();
         }
     }
+
+    public class AfricanParrot : Parrot
+    {
+        private readonly int _numberOfCoconuts;
+        public AfricanParrot(int numberOfCoconuts) : base(default, default, default, default)
+        {
+            _numberOfCoconuts = numberOfCoconuts;
+        }
+
+        public override double GetSpeed()
+        {
+            return Math.Max(0, GetBaseSpeed() - GetLoadFactor() * _numberOfCoconuts);
+        }
+
+        private double GetLoadFactor()
+        {
+            return 9.0;
+        }
+    }
 }
