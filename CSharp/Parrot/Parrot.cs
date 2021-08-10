@@ -4,47 +4,51 @@ namespace Parrot
 {
     public class Parrot
     {
-        private readonly bool _isNailed;
+        public virtual double GetSpeed()
+        {
+            return 12.0;
+        }
+    }
+
+    public class EuropeanParrot : Parrot { }
+
+    public class AfricanParrot : Parrot
+    {
         private readonly int _numberOfCoconuts;
-        private readonly ParrotTypeEnum _type;
-        private readonly double _voltage;
-
-        public Parrot(ParrotTypeEnum type, int numberOfCoconuts, double voltage, bool isNailed)
+        public AfricanParrot(int numberOfCoconuts)
         {
-            _type = type;
             _numberOfCoconuts = numberOfCoconuts;
-            _voltage = voltage;
-            _isNailed = isNailed;
         }
 
-        public double GetSpeed()
+        public override double GetSpeed()
         {
-            switch (_type)
-            {
-                case ParrotTypeEnum.EUROPEAN:
-                    return GetBaseSpeed();
-                case ParrotTypeEnum.AFRICAN:
-                    return Math.Max(0, GetBaseSpeed() - GetLoadFactor() * _numberOfCoconuts);
-                case ParrotTypeEnum.NORWEGIAN_BLUE:
-                    return _isNailed ? 0 : GetBaseSpeed(_voltage);
-            }
-
-            throw new Exception("Should be unreachable");
-        }
-
-        private double GetBaseSpeed(double voltage)
-        {
-            return Math.Min(24.0, voltage * GetBaseSpeed());
+            return Math.Max(0, base.GetSpeed() - GetLoadFactor() * _numberOfCoconuts);
         }
 
         private double GetLoadFactor()
         {
             return 9.0;
         }
-
-        private double GetBaseSpeed()
+    }
+    
+    public class NorwegianParrot : Parrot
+    {
+        private readonly double _voltage;
+        private readonly bool _isNailed;
+        public NorwegianParrot(double voltage, bool isNailed)
         {
-            return 12.0;
+            _voltage = voltage;
+            _isNailed = isNailed;
+        }
+
+        public override double GetSpeed()
+        {
+            return _isNailed ? 0 : GetBaseSpeed(_voltage);
+        }
+
+        private double GetBaseSpeed(double voltage)
+        {
+            return Math.Min(24.0, voltage * base.GetSpeed());
         }
     }
 }
